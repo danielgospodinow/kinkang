@@ -11,6 +11,6 @@ The types of supported balancing are:
 
 This piece of software can be used as
 
-* A Kubernetes `cronjob` that periodically balances clusters.
-* A CLI tool that can be used for on-demand cluster balancing.
+* (TBD) A Kubernetes `cronjob` that periodically balances clusters.
+* (TBD) A CLI tool that can be used for on-demand cluster balancing.
 * A standalone app to trigger on-demand cluster balancing.
