@@ -1,2 +1,16 @@
-# kinkang
-Kinkang, i.e. Yinyang for Kafka, is a simple Kafka topic balancer written in Golang 
+# Kinkang
+
+Kinkang, i.e. Yinyang for Kafka, is a simple Kafka topic balancer written in Golang.
+
+It uses IBM's `sarama` library to interact with Kafka.
+
+The types of supported balancing are:
+
+* Round Robin
+* Smart Balance
+
+This piece of software can be used as
+
+* A Kubernetes `cronjob` that periodically balances clusters.
+* A CLI tool that can be used for on-demand cluster balancing.
+* A standalone app to trigger on-demand cluster balancing.
