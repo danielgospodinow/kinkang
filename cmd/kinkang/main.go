@@ -72,7 +72,7 @@ func main() {
 		log.Printf("Looking at topic: '%s', assignments: %v\n", topic, details.ReplicaAssignment)
 
 		log.Printf("Balancing topic: '%s'...\n", topic)
-		newAssignments, err := topicBalancer.Balance(topic, details.ReplicaAssignment)
+		newAssignments, err := topicBalancer.Balance(topic, int32(numBrokers), details.ReplicaAssignment)
 		if err != nil {
 			log.Printf("Error balancing topic: %v, skipping it...", err)
 		}
