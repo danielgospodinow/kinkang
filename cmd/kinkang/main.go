@@ -13,10 +13,13 @@ const (
 	kafkaUserConfig            = "KAFKA_USER"
 	kafkaPasswordConfig        = "KAFKA_PASSWORD"
 
-	balancerAlgorithmConfig        = "BALANCER_ALGORITHM"
-	balancerAlgorithmRoundRobin    = "round-robin"
-	balancerAlgorithmSmartBalance  = "smart-balance"
-	balancerAlgorithmConfigDefault = balancerAlgorithmSmartBalance
+	balancerAlgorithmConfig       = "BALANCER_ALGORITHM"
+	balancerAlgorithmRoundRobin   = "round-robin"
+	balancerAlgorithmSmartBalance = "smart-balance"
+)
+
+var (
+	defaultBalancerAlgorithm = balancer.NewSmartBalanceBalancer()
 )
 
 func main() {
@@ -64,8 +67,8 @@ func main() {
 		log.Printf("Using Smart Balance balancer algorithm\n")
 		topicBalancer = balancer.NewSmartBalanceBalancer()
 	default:
-		log.Printf("Using default balancer algorithm: %s\n", balancerAlgorithmConfigDefault)
-		topicBalancer = balancer.NewSmartBalanceBalancer()
+		log.Printf("Using default balancer algorithm\n")
+		topicBalancer = defaultBalancerAlgorithm
 	}
 
 	for topic, details := range topicDetails {
