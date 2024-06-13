@@ -19,7 +19,7 @@ const (
 )
 
 var (
-	defaultBalancerAlgorithm = balancer.NewSmartBalanceBalancer()
+	defaultBalancerAlgorithm = balancer.NewRoundRobinBalancer()
 )
 
 func main() {
