@@ -1,3 +1,5 @@
+[![build-and-test](https://github.com/danielgospodinow/kinkang/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/danielgospodinow/kinkang/actions/workflows/ci.yml)
+
 # Kinkang
 
 Kinkang, i.e. Yinyang for Kafka, is a simple Kafka topic balancer written in Golang.
