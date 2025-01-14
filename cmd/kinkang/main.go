@@ -24,22 +24,12 @@ var (
 
 func main() {
 	kafkaBootstrapServer := os.Getenv(kafkaBootstrapServerConfig)
-	kafkaUser := os.Getenv(kafkaUserConfig)
-	kafkaPassword := os.Getenv(kafkaPasswordConfig)
 
-	if kafkaBootstrapServer == "" || kafkaUser == "" || kafkaPassword == "" {
-		log.Fatalf("Missing required environment variables: %s, %s, %s", kafkaBootstrapServerConfig, kafkaUserConfig, kafkaPasswordConfig)
+	if kafkaBootstrapServer == "" {
+		log.Fatalf("Missing required environment variables: %s", kafkaBootstrapServerConfig)
 	}
 
-	saramaCfg := sarama.NewConfig()
-	saramaCfg.Version = sarama.V3_5_0_0
-	saramaCfg.Net.SASL.Enable = true
-	saramaCfg.Net.SASL.Mechanism = sarama.SASLTypePlaintext
-	saramaCfg.Net.SASL.User = kafkaUser
-	saramaCfg.Net.SASL.Password = kafkaPassword
-	saramaCfg.Net.TLS.Enable = true
-
-	admin, err := sarama.NewClusterAdmin([]string{kafkaBootstrapServer}, saramaCfg)
+	admin, err := sarama.NewClusterAdmin([]string{kafkaBootstrapServer}, sarama.NewConfig())
 	if err != nil {
 		log.Fatalf("Error creating cluster admin: %v", err)
 	}
@@ -90,4 +80,6 @@ func main() {
 
 		log.Printf("Topic '%s' successfully rebalanced\n", topic)
 	}
+
+	log.Printf("All topics rebalanced\n")
 }
