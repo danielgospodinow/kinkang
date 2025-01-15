@@ -29,7 +29,9 @@ func main() {
 		log.Fatalf("Missing required environment variables: %s", kafkaBootstrapServerConfig)
 	}
 
-	admin, err := sarama.NewClusterAdmin([]string{kafkaBootstrapServer}, sarama.NewConfig())
+	adminConfig := sarama.NewConfig()
+	adminConfig.Version = sarama.V2_4_0_0
+	admin, err := sarama.NewClusterAdmin([]string{kafkaBootstrapServer}, adminConfig)
 	if err != nil {
 		log.Fatalf("Error creating cluster admin: %v", err)
 	}
