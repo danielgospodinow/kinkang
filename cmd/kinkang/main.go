@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"os"
+	"strconv"
 
 	"github.com/IBM/sarama"
 	"github.com/danielgospodinow/kinkang/internal/balancer"
@@ -44,6 +45,17 @@ func main() {
 	numBrokers := len(brokers)
 	log.Printf("Cluster has %d brokers\n", numBrokers)
 
+	racks := map[int32][]int32{}
+	for _, broker := range brokers {
+		rack, err := strconv.Atoi(broker.Rack())
+		if err != nil {
+			log.Fatalf("Error parsing rack: %v", err)
+		}
+
+		racks[int32(rack)] = append(racks[int32(rack)], broker.ID())
+	}
+	log.Printf("Cluster has %d racks: %v\n", len(racks), racks)
+
 	topicDetails, err := admin.ListTopics()
 	if err != nil {
 		log.Fatalf("Error listing topics: %v", err)
@@ -67,7 +79,7 @@ func main() {
 		log.Printf("Looking at topic: '%s', assignments: %v\n", topic, details.ReplicaAssignment)
 
 		log.Printf("Balancing topic: '%s'...\n", topic)
-		newAssignments, err := topicBalancer.Balance(topic, int32(numBrokers), details.ReplicaAssignment)
+		newAssignments, err := topicBalancer.Balance(topic, int32(numBrokers), racks, details.ReplicaAssignment)
 		if err != nil {
 			log.Printf("Error balancing topic: %v, skipping it...", err)
 		}

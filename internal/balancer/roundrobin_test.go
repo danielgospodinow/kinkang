@@ -14,7 +14,7 @@ func TestRoundRobinBalancer_Balance(t *testing.T) {
 		t.Parallel()
 
 		balancer := NewRoundRobinBalancer()
-		assignments, err := balancer.Balance("test-topic", 6, map[int32][]int32{})
+		assignments, err := balancer.Balance("test-topic", 6, map[int32][]int32{}, nil)
 		require.NoError(t, err)
 		assert.Empty(t, assignments)
 	})
@@ -23,7 +23,7 @@ func TestRoundRobinBalancer_Balance(t *testing.T) {
 		t.Parallel()
 
 		balancer := NewRoundRobinBalancer()
-		assignments, err := balancer.Balance("test-topic", 6, map[int32][]int32{
+		assignments, err := balancer.Balance("test-topic", 6, nil, map[int32][]int32{
 			0: {0},
 		})
 		require.NoError(t, err)
@@ -36,7 +36,7 @@ func TestRoundRobinBalancer_Balance(t *testing.T) {
 		t.Parallel()
 
 		balancer := NewRoundRobinBalancer()
-		assignments, err := balancer.Balance("test-topic", 6, map[int32][]int32{
+		assignments, err := balancer.Balance("test-topic", 6, nil, map[int32][]int32{
 			0: {0, 1, 2},
 		})
 		require.NoError(t, err)
@@ -49,7 +49,7 @@ func TestRoundRobinBalancer_Balance(t *testing.T) {
 		t.Parallel()
 
 		balancer := NewRoundRobinBalancer()
-		assignments, err := balancer.Balance("test-topic", 6, map[int32][]int32{
+		assignments, err := balancer.Balance("test-topic", 6, nil, map[int32][]int32{
 			0: {0},
 			1: {0},
 			2: {0},
@@ -66,7 +66,7 @@ func TestRoundRobinBalancer_Balance(t *testing.T) {
 		t.Parallel()
 
 		balancer := NewRoundRobinBalancer()
-		assignments, err := balancer.Balance("test-topic", 6, map[int32][]int32{
+		assignments, err := balancer.Balance("test-topic", 6, nil, map[int32][]int32{
 			0: {0, 1, 2},
 			1: {0, 1, 2},
 			2: {0, 1, 2},
